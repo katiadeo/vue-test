@@ -1,9 +1,18 @@
 <template>
-	<n-button size="large" type="info" class="addBtn" @click="showModal = true">
-		ADD USER
-	</n-button>
+	<div class="buttonsBlock">
+		<n-button size="medium" type="info" class="addBtn" @click="showModal = true">
+			Add user
+		</n-button>
+		<n-tooltip placement="bottom-end" trigger="hover">
+			<template #trigger>
+				<n-button ghost size="medium" type="info" @click="reload">Reload</n-button>
+			</template>
+			Just for testing
+		</n-tooltip>
+	</div>
+
 	<n-modal v-model:show="showModal" :bordered="false">
-		<n-card title="Add User">
+		<n-card title="Add User" closable @close="showModal = false">
 			<n-form :model="formData" :rules="rules">
 				<n-form-item path="user.name" label="Name">
 					<n-input
@@ -99,12 +108,22 @@ export default {
 			this.formData.user.name = '';
 			this.formData.user.phone = '';
 		},
+		reload() {
+			window.location.reload();
+		},
 	},
 	emits: ['addUser'],
 };
 </script>
 
 <style scoped>
+.buttonsBlock {
+	display: flex;
+	gap: 1em;
+}
+.n-button {
+	text-transform: uppercase;
+}
 .addBtn {
 	margin-bottom: 1.5em;
 }
